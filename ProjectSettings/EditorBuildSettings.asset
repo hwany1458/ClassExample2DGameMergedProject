@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SnakeGameScene.unity
+    guid: 92e79478609b8a74a82459bb4fe015ec
+  - enabled: 1
+    path: Assets/Scenes/RockPaperScissorsGameScene.unity
+    guid: beba46ee2b35f49489030f94e5bee217
+  m_configObjects: {}
