@@ -193,7 +193,8 @@ public class Snake : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
                 break;
             case "BtnNo":
-                Application.Quit();
+                //Application.Quit();
+                SceneManager.LoadScene("MainMenuScene");
                 break;
         }
     }

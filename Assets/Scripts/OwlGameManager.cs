@@ -98,8 +98,9 @@ public class OwlGameManager : MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             break;
          case "BtnQuit":
-            Application.Quit();
-            break;
+                //Application.Quit();
+                SceneManager.LoadScene("MainMenuScene");
+                break;
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;   // UI 처리용 라이브러리
+using UnityEngine.SceneManagement;
 
 public class RPSGameManager:MonoBehaviour {
 
@@ -91,4 +92,8 @@ public class RPSGameManager:MonoBehaviour {
         txtResult.text = "아래 버튼을 선택하세요";
     }
 
+    public void CloseGame()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+    }
 }
