@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Snake : MonoBehaviour
 {
-    float speedMove = 3f; // 이동속도
+     float speedMove = 3.0f; // 이동속도
     float speedRot = 120f;  // 회전속도
 
     bool isDead = false;  // 사망 여부 체크
@@ -20,6 +20,7 @@ public class Snake : MonoBehaviour
     GameObject panelOver;
     Text txtCoin;
     Text txtTime;
+
     int coinCnt = 0;
     float startTime;
 
@@ -27,6 +28,7 @@ public class Snake : MonoBehaviour
     GameObject panelStick;
     Joystick stick;
     bool isMobile;
+
 
     // ------------------ methods
     private void Awake() 
@@ -79,6 +81,7 @@ public class Snake : MonoBehaviour
         //Debug.Log("충돌물체=" + collision.gameObject.name);
         switch (collision.gameObject.tag)
         {
+            // 뱀(Snake)과 충돌체가 무엇인가에 따라
             case "Coin":
                 MoveCoin();
                 AddTail();
@@ -95,6 +98,7 @@ public class Snake : MonoBehaviour
     // Coin 이동
     void MoveCoin()
     {
+        // 코인 카운트를 증가
         coinCnt++;
 
         // Coin을 이동할 범위 - 벽의 안쪽

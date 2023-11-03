@@ -11,9 +11,15 @@ public class RPSGameManager:MonoBehaviour {
     Text txtYou;        // 당신이 승리한 횟수 표시용
     Text txtCom;        // 컴퓨터가 승리한 횟수 표시용
     Text txtResult;     // 판정 결과 표시용
+    Text txtResultCount; // 승무패 표시용
 
     int cntYou = 0;     // 당신이 승리한 횟수
     int cntCom = 0;     // 컴퓨터가 승리한 횟수
+
+    // 승무패
+    int win = 0;  // 승 카운트
+    int draw = 0;  // 무 카운트
+    int lose = 0;  // 패 카운트
 
     // Use this for initialization
     void Start () {
@@ -24,7 +30,8 @@ public class RPSGameManager:MonoBehaviour {
     void Update () {
         // Esc Key로 종료
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
+            //Application.Quit();
+            CloseGame();
         }
     }
 
@@ -37,11 +44,14 @@ public class RPSGameManager:MonoBehaviour {
         //int who; 
 
         if (k == 0) {
+            draw++;
             txtResult.text = "비겼습니다.";
         } else if (k == 1 || k == -2) {
             cntYou++;
+            win++;
             txtResult.text = "당신이 이겼습니다.";
         } else {
+            lose++;
             cntCom++;
             txtResult.text = "컴퓨터가 이겼습니다.";
         }
@@ -61,6 +71,7 @@ public class RPSGameManager:MonoBehaviour {
         // 승리한 횟수
         txtYou.text = cntYou.ToString();
         txtCom.text = cntCom.ToString();
+        txtResultCount.text = win + "승 " + draw + "무 " + lose + "패";
 
         // txtResult의 애니메이션 실행
         txtResult.GetComponent<Animator>().Play("TextScale", -1, 0);
@@ -87,6 +98,7 @@ public class RPSGameManager:MonoBehaviour {
         txtYou = GameObject.Find("TxtYou").GetComponent<Text>();
         txtCom = GameObject.Find("TxtCom").GetComponent<Text>();
         txtResult = GameObject.Find("TxtResult").GetComponent<Text>();
+        txtResultCount = GameObject.Find("TxtResultCount").GetComponent<Text>();
 
         // 판정 결과 메시지 활용
         txtResult.text = "아래 버튼을 선택하세요";

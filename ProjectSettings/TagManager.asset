@@ -11,6 +11,8 @@ TagManager:
   - Bird
   - Tail
   - Gift
+  - ItemPlus
+  - ItemMinus
   layers:
   - Default
   - TransparentFX

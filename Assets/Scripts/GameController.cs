@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
 
     public void OpenSnakeGame()
     {
-        SceneManager.LoadScene("SnakeGameScene");
+        //SceneManager.LoadScene("SnakeGameScene");
+        SceneManager.LoadScene("SnakeGameScene1");
     }
 
     public void OpenOwlGame()
