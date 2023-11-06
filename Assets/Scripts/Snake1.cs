@@ -34,7 +34,9 @@ public class Snake1 : MonoBehaviour
     bool isMobile;
 
     // Game Controll
-    int isSetSpeed = 2;  // 1 (Coin), 2 (Time)
+    // 속도 셋팅은 설정 화면 같은 곳에서 저장하도록 수정 필요
+    int isSetSpeed = 1;  // 1 (Coin), 2 (Time)
+
     int oldMin = 0, newMin = 0;
     int score = 0;
 
@@ -261,8 +263,14 @@ public class Snake1 : MonoBehaviour
             Vector3 pos = target.position;
             Quaternion rot = target.rotation;
 
+            /* 꼬리가 붙으면서 속도가 빨라지면, 꼬리가 떨어지는 느낌이 있음
+             * 이를 수정하려고 고정(?) 수치를 변경
             tail.position = Vector3.Lerp(tail.position, pos, 4 * Time.deltaTime);
             tail.rotation = Quaternion.Lerp(tail.rotation, rot, 4 * Time.deltaTime);
+            */
+
+            tail.position = Vector3.Lerp(tail.position, pos, (speedMove+1) * Time.deltaTime);
+            tail.rotation = Quaternion.Lerp(tail.rotation, rot, (speedMove + 1) * Time.deltaTime);
 
             target = tail;
         }
