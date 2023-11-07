@@ -5,46 +5,61 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Snake1 : MonoBehaviour
+public class Snake2Person : MonoBehaviour
 {
     public float speedMove = 2.5f; // 이동속도
-    float speedRot = 120f;  // 회전속도
+    float speedRot = 150f;  // 회전속도
 
     bool isDead = false;  // 사망 여부 체크
+
+    List<Transform> tails = new List<Transform>();
 
     Transform coin;
     Transform plusItem;
     Transform minusItem;
 
-    List<Transform> tails = new List<Transform>();
-
-    // UI
-    GameObject panelOver;
     Text txtCoin;
-    Text txtTime;
     Text txtSpeed;
     Text txtScore;
 
-    int coinCnt = 0;
+    /*  SnakeGameManager로 이동
+    // UI
+    GameObject panelOver;
+    Text txtTime;
+
     float startTime;
 
-    // Joystick
+    // Joystick (모바일에서는 2인용을 제공하지 않으므로 삭제해도 무방)
     GameObject panelStick;
-    Joystick stick;
     bool isMobile;
+    Joystick stick;
+    */
+
+
+    int coinCnt = 0;
 
     // Game Controll
-    int isSetSpeed = 2;  // 1 (Coin), 2 (Time)
+    int isSetSpeed = 1;  // 1 (Coin), 2 (Time)
     int oldMin = 0, newMin = 0;
     int score = 0;
 
     AudioSource[] soundEffect;  // 0 (Get item), 1 (Game over)
 
+    // 2인용으로
+    public GameObject snakeGameManager;
+    public int playerNum = 1;  // 뱀 번호
+    string movAxisName;  // 이동축의 이름 저장
+    string rotAxisName;  // 회전축의 이름 저장
+    string txtCoinName;
+    string txtSpeedName;
+    string txtScoreName;
+
     // ------------------ methods
     private void Awake() 
     { 
         InitGame();
-        startTime = Time.time;
+        // SnakeGameManager로 이동
+        //startTime = Time.time;
     }
 
     // Start is called before the first frame update
@@ -69,19 +84,30 @@ public class Snake1 : MonoBehaviour
     // 게임 초기화
     void InitGame()
     {
+        // 2인용으로
+        snakeGameManager = GameObject.Find("GameManager");
+        movAxisName = "Vertical" + playerNum;
+        rotAxisName = "Horizontal" + playerNum;
+
         coin = GameObject.Find("Coin").transform;
         plusItem = GameObject.Find("Hexgon").transform;
         minusItem = GameObject.Find("Cuboid").transform;
 
+        txtCoinName = "TxtCoin" + playerNum;
+        txtSpeedName = "TxtSpeed" + playerNum;
+        txtScoreName = "TxtScore" + playerNum;
+        txtCoin = GameObject.Find(txtCoinName).GetComponent<Text>();
+        txtSpeed = GameObject.Find(txtSpeedName).GetComponent<Text>();
+        txtScore = GameObject.Find(txtScoreName).GetComponent<Text>();
+
+        /* SnakeGameManager 로 이동
         // UI  위젯
         panelOver = GameObject.Find("PanelOver");
         panelOver.SetActive(false);
 
-        txtCoin = GameObject.Find("TxtCoin").GetComponent<Text>();
         txtTime = GameObject.Find("TxtTime").GetComponent<Text>();
-        txtSpeed = GameObject.Find("TxtSpeed").GetComponent<Text>();
-        txtScore = GameObject.Find("TxtScore").GetComponent<Text>();
 
+        //----- 모바일에서는 2인용을 제공하지 않으므로 삭제해도 무방
         // Mobile Device인가?
         isMobile = Application.platform == RuntimePlatform.Android ||
                    Application.platform == RuntimePlatform.IPhonePlayer;
@@ -91,10 +117,12 @@ public class Snake1 : MonoBehaviour
         panelStick = GameObject.Find("PanelStick");
         panelStick.SetActive(isMobile);
         stick = panelStick.transform.GetChild(0).GetComponent<Joystick>();
+        */
 
         // Audio sound 가져오기
         // 현재 뱀에 2개의 AudioSound가 걸려 있음 - 배열로 선언하고 GetComponents()로 가져옴
         soundEffect = GetComponents<AudioSource>();
+
     }
 
     void MoveHead()
@@ -105,14 +133,20 @@ public class Snake1 : MonoBehaviour
 
         // 회전
         //amount = Input.GetAxis("Horizontal") * speedRot;
+        /* 모바일에서는 2인용을 제공하지 않으므로 삭제해도 무방
         if (!isMobile)
         {
-            amount = Input.GetAxis("Horizontal") * speedRot;
+            //amount = Input.GetAxis("Horizontal") * speedRot;
+            // 2인용으로
+            amount = Input.GetAxis(rotAxisName) * speedRot;
         }
         else
         {
             amount = stick.Horizontal() * speedRot;
         }
+        */
+
+        amount = Input.GetAxis(rotAxisName) * speedRot;
         transform.Rotate(Vector3.up * amount * Time.deltaTime);
     }
 
@@ -141,7 +175,10 @@ public class Snake1 : MonoBehaviour
             case "Wall":
                 isDead = true;
                 soundEffect[1].Play();  // 게임오버 사운드
-                panelOver.SetActive(isDead);  // 게임오버되어 화면 띄움
+
+                //panelOver.SetActive(isDead);  // 게임오버되어 화면 띄움
+                // 2인용으로 변경
+                snakeGameManager.SendMessage("GameOver", isDead);
                 break;
         }
     }
@@ -261,8 +298,8 @@ public class Snake1 : MonoBehaviour
             Vector3 pos = target.position;
             Quaternion rot = target.rotation;
 
-            tail.position = Vector3.Lerp(tail.position, pos, 4 * Time.deltaTime);
-            tail.rotation = Quaternion.Lerp(tail.rotation, rot, 4 * Time.deltaTime);
+            tail.position = Vector3.Lerp(tail.position, pos, (speedMove+1) * Time.deltaTime);
+            tail.rotation = Quaternion.Lerp(tail.rotation, rot, (speedMove + 1) * Time.deltaTime);
 
             target = tail;
         }
@@ -275,13 +312,17 @@ public class Snake1 : MonoBehaviour
         txtSpeed.text = speedMove.ToString("Speed : 0.0");
         txtScore.text = "Score : " + score.ToString();
 
+        /* 2인용으로 이동
         float span = Time.time - startTime;
         int h = Mathf.FloorToInt(span / 3600);
         int m = Mathf.FloorToInt(span / 60 % 60);
         float s = span % 60;
-        
-        newMin = m;
-        
+        */
+
+        //newMin = m;
+        // 2인용으로 변경
+        newMin = snakeGameManager.GetComponent<SnakeGameManager>().setTimeM;
+
         // Time 과 Speed Setting(time으로)에 따라 이동 속도(speedMove)를 증가
         if ((oldMin != newMin) && (isSetSpeed == 2))
         {
@@ -289,9 +330,11 @@ public class Snake1 : MonoBehaviour
             oldMin = newMin;
         }
 
-        txtTime.text = string.Format("Time: {0:0}:{1:0}:{2:00.0}", h, m, s);
+        // 2인용으로 이동
+        //txtTime.text = string.Format("Time: {0:0}:{1:0}:{2:00.0}", h, m, s);
     }
 
+    /* 2인용으로 이동
     // Button Click
     public void OnButtonClick(Button button)
     {
@@ -306,5 +349,5 @@ public class Snake1 : MonoBehaviour
                 break;
         }
     }
-
+    */
 }

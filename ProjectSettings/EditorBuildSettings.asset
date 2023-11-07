@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JumpingOwlGameScene.unity
     guid: c2d8b2d8f6c68b545b66ff6f90ea1dea
+  - enabled: 1
+    path: Assets/Scenes/SnakeGame4TwoPersonScene.unity
+    guid: fe2408e5814727249a9217a256230dae
   m_configObjects: {}
