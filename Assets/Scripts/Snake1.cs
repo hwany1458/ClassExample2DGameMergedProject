@@ -34,7 +34,7 @@ public class Snake1 : MonoBehaviour
     bool isMobile;
 
     // Game Controll
-    int isSetSpeed = 2;  // 1 (Coin), 2 (Time)
+    int isSetSpeed = 1;  // 1 (Coin), 2 (Time)
     int oldMin = 0, newMin = 0;
     int score = 0;
 
@@ -187,7 +187,7 @@ public class Snake1 : MonoBehaviour
         soundEffect[0].Play();
 
         // Coin count와 Speed Setting(coin으로)에 따라 이동 속도(speedMove)를 증가
-        if (((coinCnt % 3) == 0) && (isSetSpeed == 1))
+        if (((coinCnt % 5) == 0) && (isSetSpeed == 1))
         {
             speedMove += 0.5f;
         }

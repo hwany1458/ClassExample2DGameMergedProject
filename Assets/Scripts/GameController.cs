@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     // ----------- Variables
     
     bool isMobile;  // 모바일용인가
+    //public int isSetSpeed = 1;  // 뱀게임 스피드향상 설정값  1 (Coin=item), 2 (Time)
 
     // ---------------------- Methods
 
