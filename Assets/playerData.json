@@ -1,16 +1,11 @@
 {
-    "name": "YongHwan Lee",
-    "affiliation": "원광대학교 게임콘텐츠학과",
-    "gender": "M",
-    "age": 40,
+    "name": "YongHwan",
+    "affiliation": "Wonkwang University",
+    "gender": "Man",
+    "age": 50,
     "lectures": [
-        "C언어",
-        "고급프로그래밍언어",
-        "웹(HTML5)프로그래밍",
-        "게임엔진이해와실습",
-        "게임프로그래밍",
-        "실감형혼합현실",
-        "캡스톤디자인1",
-        "대학생활과자기혁신"
+        "C Langages",
+        "Understanding of Game Engine",
+        "Capstone Design"
     ]
 }
