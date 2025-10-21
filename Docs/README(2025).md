@@ -5,9 +5,9 @@ Merged Unity Project in 2D Game Programming Class
 ### Figures
 * 실행화면
 
-    <img src="Docs/fig4.png" style="width:420px"></img><br>
-    <img src="Docs/fig1.png" style="width:420px"></img><br>
-    <img src="Docs/fig2.png" style="width:420px"></img><br>
+    <img src="fig4.png" style="width:420px"></img><br>
+    <img src="fig1.png" style="width:420px"></img><br>
+    <img src="fig2.png" style="width:420px"></img><br>
 
 ### Contributor
 기획 by <br>
